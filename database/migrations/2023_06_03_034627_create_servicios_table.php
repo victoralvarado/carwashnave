@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion_servicio');
+            $table->enum('estado', ['a', 'i'])->default('a');
             $table->timestamps();
         });
     }
