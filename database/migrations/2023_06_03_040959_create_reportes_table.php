@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->date('fecha_reporte');
             $table->string('descripcion_reporte');
+            $table->enum('estado', ['a', 'i'])->default('a');
             $table->timestamps();
         });
     }

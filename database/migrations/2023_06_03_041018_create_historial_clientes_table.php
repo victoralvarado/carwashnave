@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->date('fecha_servicio');
             $table->string('descripcion_servicio_realizado');
+            $table->enum('estado', ['a', 'i'])->default('a');
             $table->timestamps();
         });
     }
