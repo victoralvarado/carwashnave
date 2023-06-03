@@ -14,10 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::resource('servicios', 'App\Http\Controllers\ServiciosController');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -27,3 +28,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->group(function () {
+        Route::get('servicios', 'App\Http\Controllers\ServiciosController@index')
+            ->name('servicios');
+    });
