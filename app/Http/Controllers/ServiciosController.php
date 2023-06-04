@@ -46,7 +46,7 @@ class ServiciosController extends Controller
     public function guardarRegistro(Request $request, $id)
     {
         $registroServicio = new RegistroServicio;
-        $registroServicio->servicios_diarios_id = $id;
+        $registroServicio->servicio_diarios_id = $id;
         $registroServicio->descripcion = $request->descripcion;
         $registroServicio->comentarios = $request->comentarios;
         $registroServicio->save();
@@ -54,8 +54,8 @@ class ServiciosController extends Controller
     }
     public function index()
     {
-        $alumnos = Servicio::where('estado', 'a')->get();
-        return view('servicios.registrar')->with('servicios', $alumnos);
+        $servicios = Servicio::where('estado', 'a')->get();
+        return view('serviciosdiarios.index')->with('servicios', $servicios);
     }
 
     /**

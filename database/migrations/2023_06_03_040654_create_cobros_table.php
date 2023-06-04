@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('cobros', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('servicio_diario_id');
-            $table->foreign('servicio_diario_id')->references('id')->on('servicios_diarios');
+            $table->foreign('servicio_diario_id')->references('id')->on('servicio_diarios');
             $table->decimal('monto_cobro', 8, 2);
             $table->dateTime('fecha_hora_cobro');
             $table->enum('estado', ['a', 'i'])->default('a');

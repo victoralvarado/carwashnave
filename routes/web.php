@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::resource('servicios', 'App\Http\Controllers\ServiciosController');
+Route::resource('serviciosdiarios', 'App\Http\Controllers\ServiciosDiariosController');
 
 Route::middleware([
     'auth:sanctum',
@@ -31,6 +31,6 @@ Route::middleware([
 
 Route::middleware(['auth:sanctum', 'verified'])
     ->group(function () {
-        Route::get('servicios', 'App\Http\Controllers\ServiciosController@index')
-            ->name('servicios');
+        Route::get('serviciosdiarios', 'App\Http\Controllers\ServiciosDiariosController@index')
+            ->name('serviciosdiarios');
     });

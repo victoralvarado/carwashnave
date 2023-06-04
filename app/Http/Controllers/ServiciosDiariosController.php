@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ServicioDiario;
+use App\Models\Servicio;
 use Illuminate\Http\Request;
 
 class ServiciosDiariosController extends Controller
@@ -13,6 +14,8 @@ class ServiciosDiariosController extends Controller
     public function index()
     {
         //
+        $serviciosdiarios = ServicioDiario::where('estado', 'a')->get();
+        return view('serviciosdiarios.index')->with('serviciosdiarios', $serviciosdiarios);
     }
 
     /**
