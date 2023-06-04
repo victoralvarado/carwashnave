@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClienteServicioDiario;
 use App\Models\ServicioDiario;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
@@ -32,6 +33,22 @@ class ServiciosDiariosController extends Controller
     public function store(Request $request)
     {
         //
+        $serviciodiarioId = ServicioDiario::table('servicio_diarios')->insertGetId([
+            'fecha' => $request->get('fecha'),
+            'hora' => $request->get('hora'),
+            'hora' => $request->get('hora'),
+            'user_id' => $request->get('user_id'),
+            'servicio_id' => $request->get('servicio_id'),
+        ]);
+
+        $clienteserviciodiario = new ClienteServicioDiario();
+
+        $clienteserviciodiario->cliente_id = $request->get('cliente_id');
+        $clienteserviciodiario->servicio_diario_id = $serviciodiarioId;
+
+        $clienteserviciodiario->save();
+
+        return redirect()->route('serviciosdiarios.index');
     }
 
     /**

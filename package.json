@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "@preline/overlay": "^1.4.0",
+        "flowbite": "^1.6.5",
         "preline": "^1.8.0"
     }
 }

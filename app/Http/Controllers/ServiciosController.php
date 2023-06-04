@@ -13,49 +13,9 @@ class ServiciosController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-    // Mostrar los servicios diarios programados para un día específico
-    public function mostrarServiciosDiarios($fecha)
-    {
-        $serviciosDiarios = ServicioDiario::where('fecha', $fecha)->get();
-        return view('servicios.mostrar', compact('serviciosDiarios'));
-    }
-
-    // Asignar clientes a un servicio diario
-    public function asignarClientes($id)
-    {
-        $servicioDiario = ServicioDiario::find($id);
-        $clientes = Cliente::all();
-        return view('servicios.asignar_clientes', compact('servicioDiario', 'clientes'));
-    }
-
-    public function guardarClientes(Request $request, $id)
-    {
-        $servicioDiario = ServicioDiario::find($id);
-        $servicioDiario->clientes()->sync($request->clientes);
-        return redirect()->route('servicios.mostrar', $servicioDiario->fecha)->with('success', 'Cliente asignados correctamente.');
-    }
-
-    // Registrar un servicio realizado
-    public function registrarServicio($id)
-    {
-        $servicioDiario = ServicioDiario::find($id);
-        return view('servicios.registrar', compact('servicioDiario'));
-    }
-
-    public function guardarRegistro(Request $request, $id)
-    {
-        $registroServicio = new RegistroServicio;
-        $registroServicio->servicio_diarios_id = $id;
-        $registroServicio->descripcion = $request->descripcion;
-        $registroServicio->comentarios = $request->comentarios;
-        $registroServicio->save();
-        return redirect()->route('servicios.mostrar', $registroServicio->servicioDiario->fecha)->with('success', 'Registro de servicio guardado correctamente.');
-    }
     public function index()
     {
-        $servicios = Servicio::where('estado', 'a')->get();
-        return view('serviciosdiarios.index')->with('servicios', $servicios);
+
     }
 
     /**

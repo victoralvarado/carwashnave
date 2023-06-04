@@ -13,7 +13,8 @@
                     </h1>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 p-6 lg:p-8 bg-white border-b border-gray-200">
-                    <form class="w-full">
+                    <form action="/serviciosdiarios" method="POST" class="w-full">
+                        @csrf
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -94,31 +95,21 @@
                                 <th class="border border-gray-400 px-4 py-2 text-gray-800">Hora</th>
                                 <th class="border border-gray-400 px-4 py-2 text-gray-800">Persona Asignada</th>
                                 <th class="border border-gray-400 px-4 py-2 text-gray-800">Tipo Servicio</th>
+                                <th class="border border-gray-400 px-4 py-2 text-gray-800">Acción</th>
 
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($serviciosdiarios as $serviciodiario)
                             <tr>
-                                <td class="border border-gray-400 px-4 py-2">1</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
+                                <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->id }}</td>
+                                <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->fecha }}</td>
+                                <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->hora }}</td>
+                                <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->user->name }}</td>
+                                <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->servicios->descripcion_servicio }}</td>
+                                <td class="border border-gray-400 px-4 py-2">Eliminar</td>
                             </tr>
-                            <tr>
-                                <td class="border border-gray-400 px-4 py-2">2</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                            </tr>
-                            <tr>
-                                <td class="border border-gray-400 px-4 py-2">3</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                                <td class="border border-gray-400 px-4 py-2">Lorem ipsum dolor sit amet</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -126,3 +117,6 @@
         </div>
     </div>
 </x-app-layout>
+
+
+
