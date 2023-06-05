@@ -32,7 +32,7 @@ class ServiciosDiariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Agregar servicio diario y obtener el ID
         $serviciodiarioId = ServicioDiario::table('servicio_diarios')->insertGetId([
             'fecha' => $request->get('fecha'),
             'hora' => $request->get('hora'),
@@ -41,6 +41,7 @@ class ServiciosDiariosController extends Controller
             'servicio_id' => $request->get('servicio_id'),
         ]);
 
+        // Agregar cliente servicio diario
         $clienteserviciodiario = new ClienteServicioDiario();
 
         $clienteserviciodiario->cliente_id = $request->get('cliente_id');
@@ -54,7 +55,7 @@ class ServiciosDiariosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ServicioDiario $servicioDiario)
+    public function show(string $id)
     {
         //
     }
@@ -62,7 +63,7 @@ class ServiciosDiariosController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ServicioDiario $servicioDiario)
+    public function edit(string $id)
     {
         //
     }
@@ -70,16 +71,30 @@ class ServiciosDiariosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ServicioDiario $servicioDiario)
+    public function update(Request $request, string $id)
     {
         //
+        $clienteserviciodiario = ServicioDiario::find($id);
+        $clienteserviciodiario->fecha = $request->get('fecha');
+        $clienteserviciodiario->hora = $request->get('hora');
+        $clienteserviciodiario->user_id = $request->get('user_id');
+        $clienteserviciodiario->servicio_id = $request->get('servicio_id');
+        $clienteserviciodiario->save();
+
+        return redirect()->route('serviciosdiarios.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ServicioDiario $servicioDiario)
+    public function destroy(string $id)
     {
         //
+        $clienteserviciodiario = ServicioDiario::find($id);
+        $clienteserviciodiario->estado = 'i';
+
+        $clienteserviciodiario->save();
+
+        return redirect()->route('serviciosdiarios.index');
     }
 }

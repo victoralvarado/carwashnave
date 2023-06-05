@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RegistroServicio;
+use App\Models\ServicioDiario;
 use Illuminate\Http\Request;
 
 class RegistroServiciosController extends Controller
@@ -13,6 +14,8 @@ class RegistroServiciosController extends Controller
     public function index()
     {
         //
+        $registroServicio = RegistroServicio::where('estado', 'a')->get();
+        return view('dashboard')->with('registroservicio', $registroServicio);
     }
 
     /**
@@ -28,7 +31,21 @@ class RegistroServiciosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Guardar servicio en la base de datos
+        $registroServicio = new RegistroServicio();
+
+        $registroServicio->servicio_diario_id = $request->servicio_diario_id;
+        $registroServicio->descripcion_servicio_realizado = $request->descripcion_servicio_realizado;
+        $registroServicio->comentarios = $request->comentarios;
+
+        // Modificar estado del servicio
+        $clienteserviciodiario = ServicioDiario::find($request->servicio_diario_id);
+        $clienteserviciodiario->estado = 'i';
+
+        $registroServicio->save();
+        $clienteserviciodiario->save();
+
+        return redirect()->route('dashboard');
     }
 
     /**
