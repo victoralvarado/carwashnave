@@ -12,7 +12,7 @@
                     <x-application-logo class="block h-12 w-auto" />
 
                     <h1 class="mt-8 text-2xl font-medium text-gray-900">
-                        Lista de Clientes Asignados
+                        Lista de Clientes Asignados a <b>{{ Auth::user()->name }}</b>
                     </h1>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4 p-6 lg:p-8 bg-white border-b border-gray-200">
