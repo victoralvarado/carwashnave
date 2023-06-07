@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::resource('serviciosdiarios', 'App\Http\Controllers\ServiciosDiariosController');
-
+/*
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -27,10 +27,23 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});*/
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', 'App\Http\Controllers\ServiciosDiariosController@mostrarDatosUsuario')
+        ->name('dashboard');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])
-    ->group(function () {
-        Route::get('serviciosdiarios', 'App\Http\Controllers\ServiciosDiariosController@index')
-            ->name('serviciosdiarios');
-    });
+
+
+Route::middleware([
+    'auth:sanctum',
+    'verified'
+])->group(function () {
+    Route::get('serviciosdiarios', 'App\Http\Controllers\ServiciosDiariosController@index')
+        ->name('serviciosdiarios');
+});

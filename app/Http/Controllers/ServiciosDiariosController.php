@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\ClienteServicioDiario;
 use App\Models\ServicioDiario;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
 
@@ -18,6 +20,31 @@ class ServiciosDiariosController extends Controller
         $serviciosdiarios = ServicioDiario::where('estado', 'a')->get();
         return view('serviciosdiarios.index')->with('serviciosdiarios', $serviciosdiarios);
     }
+
+
+    public function mostrarDatosUsuario()
+    {
+        $userId = Auth::id();
+        $user = User::findOrFail($userId);
+
+        $serviciosDiarios = $user->serviciosDiarios()
+            ->join('servicios', 'servicio_diarios.servicio_id', '=', 'servicios.id')
+            ->join('clientes_servicio_diarios', 'servicio_diarios.id', '=', 'clientes_servicio_diarios.servicio_diario_id')
+            ->join('clientes', 'clientes_servicio_diarios.cliente_id', '=', 'clientes.id')
+            ->select(
+                'servicio_diarios.id',
+                'servicio_diarios.fecha',
+                'servicio_diarios.hora',
+                'servicios.descripcion_servicio',
+                'clientes.nombre',
+                'clientes.apellido',
+                'clientes.tipo_vehiculo'
+            )
+            ->get();
+
+            return view('dashboard')->with('serviciosDiarios', $serviciosDiarios);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +62,6 @@ class ServiciosDiariosController extends Controller
         // Agregar servicio diario y obtener el ID
         $serviciodiarioId = ServicioDiario::table('servicio_diarios')->insertGetId([
             'fecha' => $request->get('fecha'),
-            'hora' => $request->get('hora'),
             'hora' => $request->get('hora'),
             'user_id' => $request->get('user_id'),
             'servicio_id' => $request->get('servicio_id'),
