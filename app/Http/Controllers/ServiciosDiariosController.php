@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\User;
 use App\Models\ClienteServicioDiario;
 use App\Models\ServicioDiario;
@@ -17,8 +18,17 @@ class ServiciosDiariosController extends Controller
     public function index()
     {
         //
-        $serviciosdiarios = ServicioDiario::where('estado', 'a')->get();
-        return view('serviciosdiarios.index')->with('serviciosdiarios', $serviciosdiarios);
+        $servicios = Servicio::where('estado', 'a')->get();
+
+        $clientes = Cliente::where('estado', 'a')->get();
+
+        $users = User::where('role', 'empleado')
+        ->where('estado', 'a')
+        ->get();
+
+        $serviciosdiariosI = ServicioDiario::where('estado', 'a')->get();
+
+        return view('serviciosdiarios.index', compact('servicios','clientes', 'users', 'serviciosdiariosI'));
     }
 
 
@@ -27,7 +37,7 @@ class ServiciosDiariosController extends Controller
         $userId = Auth::id();
         $user = User::findOrFail($userId);
 
-        $serviciosDiarios = $user->serviciosDiarios()
+        $serviciosdiarios = $user->serviciosDiarios()
             ->join('servicios', 'servicio_diarios.servicio_id', '=', 'servicios.id')
             ->join('clientes_servicio_diarios', 'servicio_diarios.id', '=', 'clientes_servicio_diarios.servicio_diario_id')
             ->join('clientes', 'clientes_servicio_diarios.cliente_id', '=', 'clientes.id')
@@ -42,9 +52,22 @@ class ServiciosDiariosController extends Controller
             )
             ->get();
 
-            return view('dashboard')->with('serviciosDiarios', $serviciosDiarios);
-    }
 
+            $serviciosDiariosTodos = ServicioDiario::join('servicios', 'servicio_diarios.servicio_id', '=', 'servicios.id')
+            ->join('clientes_servicio_diarios', 'servicio_diarios.id', '=', 'clientes_servicio_diarios.servicio_diario_id')
+            ->join('clientes', 'clientes_servicio_diarios.cliente_id', '=', 'clientes.id')
+            ->select(
+                'servicio_diarios.id',
+                'servicio_diarios.fecha',
+                'servicio_diarios.hora',
+                'servicios.descripcion_servicio',
+                'clientes.nombre',
+                'clientes.apellido',
+                'clientes.tipo_vehiculo'
+            )
+            ->get();
+            return view('dashboard', compact('serviciosdiarios', 'serviciosDiariosTodos'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -85,6 +108,8 @@ class ServiciosDiariosController extends Controller
     {
         //
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

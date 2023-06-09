@@ -13,6 +13,8 @@ class ClientesController extends Controller
     public function index()
     {
         //
+        $clientes = Cliente::where('estado', 'a')->get();
+        return view('clientes.index')->with('clientes',$clientes);
     }
 
     /**
@@ -29,6 +31,14 @@ class ClientesController extends Controller
     public function store(Request $request)
     {
         //
+        $cliente = new Cliente();
+        $cliente->nombre = $request->get('nombre');
+        $cliente->apellido = $request->get('apellido');
+        $cliente->direccion = $request->get('direccion');
+        $cliente->telefono = $request->get('telefono');
+        $cliente->tipo_vehiculo = $request->get('tipo_vehiculo');
+        $cliente->save();
+        return redirect()->route('clientes');
     }
 
     /**
@@ -37,6 +47,7 @@ class ClientesController extends Controller
     public function show(Cliente $cliente)
     {
         //
+
     }
 
     /**
@@ -50,16 +61,29 @@ class ClientesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, string $id)
     {
         //
+        $cliente = Cliente::find($id);
+        $cliente->nombre = $request->get('nombre');
+        $cliente->apellido = $request->get('apellido');
+        $cliente->direccion = $request->get('direccion');
+        $cliente->telefono = $request->get('telefono');
+        $cliente->tipo_vehiculo = $request->get('tipo_vehiculo');
+        $cliente->save();
+        return redirect()->route('clientes');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cliente $cliente)
+    public function destroy(string $id)
     {
         //
+        $cliente = Cliente::find($id);
+        $cliente->estado = 'i';
+
+        $cliente->save();
+        return redirect()->route('clientes');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\RegistroServicio;
 use App\Models\ServicioDiario;
 use Illuminate\Http\Request;
@@ -55,6 +56,7 @@ class RegistroServiciosController extends Controller
     {
         //
     }
+
 
     /**
      * Show the form for editing the specified resource.
