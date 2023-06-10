@@ -23,12 +23,26 @@ class ServiciosDiariosController extends Controller
         $clientes = Cliente::where('estado', 'a')->get();
 
         $users = User::where('role', 'empleado')
-        ->where('estado', 'a')
-        ->get();
+            ->where('estado', 'a')
+            ->get();
 
-        $serviciosdiariosI = ServicioDiario::where('estado', 'a')->get();
+        $serviciosdiariosI = ServicioDiario::join('cliente_servicio_diarios', 'servicio_diarios.id', '=', 'cliente_servicio_diarios.servicio_diario_id')
+            ->join('users', 'servicio_diarios.user_id', '=', 'users.id')
+            ->join('clientes', 'cliente_servicio_diarios.cliente_id', '=', 'clientes.id')
+            ->where('servicio_diarios.estado', '=', 'a')
+            ->select(
+                'servicio_diarios.id',
+                'servicio_diarios.fecha',
+                'servicio_diarios.hora',
+                'servicio_diarios.servicios',
+                'users.name',
+                'clientes.nombre',
+                'clientes.apellido',
+                'clientes.tipo_vehiculo'
+            )
+            ->get();
 
-        return view('serviciosdiarios.index', compact('servicios','clientes', 'users', 'serviciosdiariosI'));
+        return view('serviciosdiarios.index', compact('servicios', 'clientes', 'users', 'serviciosdiariosI'));
     }
 
 
@@ -37,15 +51,15 @@ class ServiciosDiariosController extends Controller
         $userId = Auth::id();
         $user = User::findOrFail($userId);
 
-        $serviciosdiarios = $user->serviciosDiarios()
-            ->join('servicios', 'servicio_diarios.servicio_id', '=', 'servicios.id')
-            ->join('clientes_servicio_diarios', 'servicio_diarios.id', '=', 'clientes_servicio_diarios.servicio_diario_id')
-            ->join('clientes', 'clientes_servicio_diarios.cliente_id', '=', 'clientes.id')
+        $serviciosDiarios = $user->serviciosDiarios()
+            ->join('cliente_servicio_diarios', 'servicio_diarios.id', '=', 'cliente_servicio_diarios.servicio_diario_id')
+            ->join('clientes', 'cliente_servicio_diarios.cliente_id', '=', 'clientes.id')
+            ->where('servicio_diarios.estado', '=', 'a')
             ->select(
                 'servicio_diarios.id',
                 'servicio_diarios.fecha',
                 'servicio_diarios.hora',
-                'servicios.descripcion_servicio',
+                'servicio_diarios.servicios',
                 'clientes.nombre',
                 'clientes.apellido',
                 'clientes.tipo_vehiculo'
@@ -53,20 +67,22 @@ class ServiciosDiariosController extends Controller
             ->get();
 
 
-            $serviciosDiariosTodos = ServicioDiario::join('servicios', 'servicio_diarios.servicio_id', '=', 'servicios.id')
-            ->join('clientes_servicio_diarios', 'servicio_diarios.id', '=', 'clientes_servicio_diarios.servicio_diario_id')
-            ->join('clientes', 'clientes_servicio_diarios.cliente_id', '=', 'clientes.id')
+        $serviciosDiariosTodos = ServicioDiario::join('cliente_servicio_diarios', 'servicio_diarios.id', '=', 'cliente_servicio_diarios.servicio_diario_id')
+            ->join('users', 'servicio_diarios.user_id', '=', 'users.id')
+            ->join('clientes', 'cliente_servicio_diarios.cliente_id', '=', 'clientes.id')
+            ->where('servicio_diarios.estado', '=', 'a')
             ->select(
                 'servicio_diarios.id',
                 'servicio_diarios.fecha',
                 'servicio_diarios.hora',
-                'servicios.descripcion_servicio',
+                'servicio_diarios.servicios',
+                'users.name',
                 'clientes.nombre',
                 'clientes.apellido',
                 'clientes.tipo_vehiculo'
             )
             ->get();
-            return view('dashboard', compact('serviciosdiarios', 'serviciosDiariosTodos'));
+        return view('dashboard', compact('serviciosDiarios', 'serviciosDiariosTodos'));
     }
 
     /**
@@ -82,23 +98,26 @@ class ServiciosDiariosController extends Controller
      */
     public function store(Request $request)
     {
+        $servicios = $request->get('servicios');
+        $serviciosString = implode(',', $servicios);
         // Agregar servicio diario y obtener el ID
-        $serviciodiarioId = ServicioDiario::table('servicio_diarios')->insertGetId([
-            'fecha' => $request->get('fecha'),
-            'hora' => $request->get('hora'),
-            'user_id' => $request->get('user_id'),
-            'servicio_id' => $request->get('servicio_id'),
-        ]);
+        $servicioDiario = new ServicioDiario;
+        $servicioDiario->fecha = $request->get('fecha');
+        $servicioDiario->hora = $request->get('hora');
+        $servicioDiario->user_id = $request->get('user_id');
+        $servicioDiario->servicios = $serviciosString;
+        $servicioDiario->save();
+        $servicioDiarioId = $servicioDiario->id;
 
         // Agregar cliente servicio diario
         $clienteserviciodiario = new ClienteServicioDiario();
 
         $clienteserviciodiario->cliente_id = $request->get('cliente_id');
-        $clienteserviciodiario->servicio_diario_id = $serviciodiarioId;
+        $clienteserviciodiario->servicio_diario_id = $servicioDiarioId;
 
         $clienteserviciodiario->save();
 
-        return redirect()->route('serviciosdiarios.index');
+        return redirect()->route('serviciosdiarios');
     }
 
     /**
@@ -132,7 +151,7 @@ class ServiciosDiariosController extends Controller
         $clienteserviciodiario->servicio_id = $request->get('servicio_id');
         $clienteserviciodiario->save();
 
-        return redirect()->route('serviciosdiarios.index');
+        return redirect()->route('serviciosdiarios');
     }
 
     /**
@@ -146,6 +165,6 @@ class ServiciosDiariosController extends Controller
 
         $clienteserviciodiario->save();
 
-        return redirect()->route('serviciosdiarios.index');
+        return redirect()->route('serviciosdiarios');
     }
 }

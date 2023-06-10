@@ -16,8 +16,7 @@ return new class extends Migration {
             $table->time('hora');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('servicio_id');
-            $table->foreign('servicio_id')->references('id')->on('servicios');
+            $table->string('servicios');
             $table->enum('estado', ['a', 'i'])->default('a');
             $table->timestamps();
         });

@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('descripcion_servicio');
             $table->enum('estado', ['a', 'i'])->default('a');
+            $table->decimal('precio', 10, 2)->nullable();
             $table->timestamps();
         });
     }

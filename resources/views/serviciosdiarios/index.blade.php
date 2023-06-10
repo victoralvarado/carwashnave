@@ -13,7 +13,7 @@
                     </h1>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4 p-6 lg:p-8 bg-white border-b border-gray-200">
-                    <form action="/serviciosdiarios" method="POST" class="w-5/6 max-[450px]:w-full place-self-center">
+                    <form id="formulario-servicios" action="/serviciosdiarios" method="POST" class="w-5/6 max-[450px]:w-full place-self-center">
                         @csrf
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -23,7 +23,7 @@
                                 </label>
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-fecha" type="date" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                    id="grid-fecha" name="fecha" type="date" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                             </div>
                             <div class="w-full md:w-1/2 px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -32,19 +32,19 @@
                                 </label>
                                 <input
                                     class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-hora" type="time" value="{{ \Carbon\Carbon::now()->format('H:i') }}">
+                                    id="grid-hora" name="hora" type="time" value="{{ \Carbon\Carbon::now()->format('H:i') }}">
                             </div>
                         </div>
                         <div class="flex flex-wrap -mx-3 mb-6">
                             <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                     for="grid-persona-asignada">
-                                    Persona Asignada
+                                    Epleado Asignado
                                 </label>
                                 <select
                                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-persona-asignada" required>
-                                    <option value="" selected>Seleccionar Persona Asignada</option>
+                                    id="grid-persona-asignada" name="user_id" required>
+                                    <option value="" selected>Seleccionar Empleado Asignado</option>
                                     @foreach ($users as $opcion)
                                         <option value="{{ $opcion->id }}">{{ $opcion->name }}</option>
                                     @endforeach
@@ -61,7 +61,7 @@
                                     <label>
                                         <input type="checkbox"
                                             class="w-4 h-4 text-blue-600 bg-gray-200 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-                                            name="opciones[]" id="grid-tipo-servicio" value="{{ $opcion->id }}">
+                                            name="servicios[]" id="grid-tipo-servicio" value="{{ $opcion->descripcion_servicio }}">
                                         {{ $opcion->descripcion_servicio }}
                                     </label>
                                 @endforeach
@@ -75,7 +75,7 @@
                                 </label>
                                 <select
                                     class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-cliente" required>
+                                    id="grid-cliente" name="cliente_id" required>
                                     <option value="" selected disabled>Seleccionar Cliente</option>
                                     @foreach ($clientes as $opcion)
                                         <option value="{{ $opcion->id }}">{{ $opcion->nombre }}
@@ -103,10 +103,9 @@
                                 <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Código</th>
                                 <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Fecha</th>
                                 <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Hora</th>
-                                <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Persona
-                                    Asignada</th>
-                                <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Tipo
-                                    Servicio</th>
+                                <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Empleado
+                                    Asignado</th>
+                                <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Servicios</th>
                                 <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Acción</th>
 
                             </tr>
@@ -117,10 +116,70 @@
                                     <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->id }}</td>
                                     <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->fecha }}</td>
                                     <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->hora }}</td>
-                                    <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->user->name }}</td>
-                                    <td class="border border-gray-400 px-4 py-2">
-                                        {{ $serviciodiario->servicios->descripcion_servicio }}</td>
-                                    <td class="border border-gray-400 px-4 py-2">Eliminar</td>
+                                    <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->name }}</td>
+                                    <td class="border border-gray-400 px-4 py-2">{{ $serviciodiario->servicios }}</td>
+                                    <td class="border border-gray-400 px-4 py-2"><!-- Modal toggle -->
+                                        <button data-modal-target="modificar-serviciodiario-modal-{{ $serviciodiario->id }}"
+                                            data-modal-toggle="modificar-serviciodiario-modal-{{ $serviciodiario->id }}"
+                                            class="shadow my-1 bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                            type="button">
+                                            Editar
+                                        </button>
+
+                                        <!-- Main modal -->
+                                        <div id="modificar-serviciodiario-modal-{{ $serviciodiario->id }}" tabindex="-1"
+                                            aria-hidden="true"
+                                            class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                            <div class="relative w-full max-w-md max-h-full">
+                                                <!-- Modal content -->
+                                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                    <button type="button"
+                                                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                                                        data-modal-hide="modificar-serviciodiario-modal-{{ $serviciodiario->id }}">
+                                                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
+                                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd"
+                                                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        <span class="sr-only">Cerrar</span>
+                                                    </button>
+                                                    <div class="px-6 py-6 lg:px-8">
+                                                        <h3
+                                                            class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+                                                            Modificar Servicio Diario
+                                                        </h3>
+                                                            <form action="/serviciodiarios/{{ $serviciodiario->id }}" method="POST" class="space-y-6">
+                                                                @csrf
+                                                                @method('PUT')
+                                                            <div class="text-center">
+                                                                <button
+                                                                    class="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                                                    type="submit">
+                                                                    Guardar
+                                                                </button>
+                                                                <button
+                                                                    data-modal-hide="modificar-serviciodiario-modal-{{ $serviciodiario->id }}"
+                                                                    type="button"
+                                                                    class="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                                                                    Cancelar
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form action="{{ route('serviciosdiarios.destroy', $serviciodiario->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="shadow bg-red-500 hover:bg-red-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                                type="submit">
+                                                Eliminar
+                                            </button>
+                                        </form></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -129,4 +188,13 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('formulario-servicios').addEventListener('submit', function (event) {
+            var checkboxes = document.querySelectorAll('input[name="servicios[]"]:checked');
+            if (checkboxes.length === 0) {
+                event.preventDefault(); // Evita que el formulario se envíe
+                alert('Debes seleccionar al menos un servicio.');
+            }
+        });
+    </script>
 </x-app-layout>

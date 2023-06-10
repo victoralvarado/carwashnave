@@ -140,9 +140,10 @@
                                                                 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                                                                 Modificar Cliente
                                                             </h3>
-                                                                <form action="/clientes/{{ $cliente->id }}" method="POST" class="space-y-6">
-                                                                    @csrf
-                                                                    @method('PUT')
+                                                            <form action="/clientes/{{ $cliente->id }}" method="POST"
+                                                                class="space-y-6">
+                                                                @csrf
+                                                                @method('PUT')
                                                                 <div class="flex flex-wrap -mx-3 mb-6">
                                                                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                                                         <label
@@ -153,7 +154,8 @@
                                                                         <input
                                                                             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                                             id="grid-nombre" name="nombre"
-                                                                            type="text" value="{{ $cliente->nombre }}" required>
+                                                                            type="text"
+                                                                            value="{{ $cliente->nombre }}" required>
                                                                     </div>
                                                                     <div class="w-full md:w-1/2 px-3">
                                                                         <label
@@ -164,7 +166,8 @@
                                                                         <input
                                                                             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                                             id="grid-apellido" name="apellido"
-                                                                            type="text" value="{{ $cliente->apellido }}" required>
+                                                                            type="text"
+                                                                            value="{{ $cliente->apellido }}" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="flex flex-wrap -mx-3 mb-6">
@@ -189,7 +192,8 @@
                                                                         <input
                                                                             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                                             id="grid-telefono" name="telefono"
-                                                                            type="text" value="{{ $cliente->telefono }}">
+                                                                            type="text"
+                                                                            value="{{ $cliente->telefono }}">
                                                                     </div>
                                                                     <div class="w-full md:w-1/2 px-3">
                                                                         <label
@@ -200,7 +204,8 @@
                                                                         <input
                                                                             class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                                             id="grid-tipo-vehiculo"
-                                                                            name="tipo_vehiculo" type="text" value="{{ $cliente->tipo_vehiculo }}"
+                                                                            name="tipo_vehiculo" type="text"
+                                                                            value="{{ $cliente->tipo_vehiculo }}"
                                                                             required>
                                                                     </div>
                                                                 </div>

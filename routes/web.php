@@ -23,6 +23,15 @@ Route::middleware([
 ])->group(function () {
     Route::get('serviciosdiarios', 'App\Http\Controllers\ServiciosDiariosController@index')
         ->name('serviciosdiarios');
+
+    Route::post('serviciosdiarios', 'App\Http\Controllers\ServiciosDiariosController@store')
+        ->name('serviciosdiarios');
+
+    Route::delete('serviciosdiarios/{id}', 'App\Http\Controllers\ServiciosDiariosController@destroy')
+        ->name('serviciosdiarios.destroy');
+
+    Route::put('serviciosdiarios/{id}', 'App\Http\Controllers\ServiciosDiariosController@update')
+        ->name('serviciosdiarios.update');
 });
 
 Route::middleware([
@@ -31,31 +40,17 @@ Route::middleware([
 ])->group(function () {
     Route::get('clientes', 'App\Http\Controllers\ClientesController@index')
         ->name('clientes');
-});
 
-Route::middleware([
-    'auth:sanctum',
-    'verified'
-])->group(function () {
     Route::post('clientes', 'App\Http\Controllers\ClientesController@store')
         ->name('clientes');
-});
 
-Route::middleware([
-    'auth:sanctum',
-    'verified'
-])->group(function () {
     Route::delete('clientes/{id}', 'App\Http\Controllers\ClientesController@destroy')
-    ->name('clientes.destroy');
-});
+        ->name('clientes.destroy');
 
-Route::middleware([
-    'auth:sanctum',
-    'verified'
-])->group(function () {
     Route::put('clientes/{id}', 'App\Http\Controllers\ClientesController@update')
         ->name('clientes.update');
 });
+
 
 Route::middleware([
     'auth:sanctum',
@@ -64,8 +59,3 @@ Route::middleware([
     Route::get('dashboard', 'App\Http\Controllers\ServiciosDiariosController@mostrarDatosUsuario')
         ->name('dashboard');
 });
-
-
-
-
-
