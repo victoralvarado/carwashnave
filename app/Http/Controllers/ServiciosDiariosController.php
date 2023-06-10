@@ -36,8 +36,10 @@ class ServiciosDiariosController extends Controller
                 'servicio_diarios.hora',
                 'servicio_diarios.servicios',
                 'users.name',
+                'users.id as id_user',
                 'clientes.nombre',
                 'clientes.apellido',
+                'clientes.id as id_cliente',
                 'clientes.tipo_vehiculo'
             )
             ->get();
@@ -53,6 +55,7 @@ class ServiciosDiariosController extends Controller
 
         $serviciosDiarios = $user->serviciosDiarios()
             ->join('cliente_servicio_diarios', 'servicio_diarios.id', '=', 'cliente_servicio_diarios.servicio_diario_id')
+            ->join('users', 'servicio_diarios.user_id', '=', 'users.id')
             ->join('clientes', 'cliente_servicio_diarios.cliente_id', '=', 'clientes.id')
             ->where('servicio_diarios.estado', '=', 'a')
             ->select(
@@ -60,8 +63,11 @@ class ServiciosDiariosController extends Controller
                 'servicio_diarios.fecha',
                 'servicio_diarios.hora',
                 'servicio_diarios.servicios',
+                'users.name',
+                'users.id as id_user',
                 'clientes.nombre',
                 'clientes.apellido',
+                'clientes.id as id_cliente',
                 'clientes.tipo_vehiculo'
             )
             ->get();
@@ -77,8 +83,10 @@ class ServiciosDiariosController extends Controller
                 'servicio_diarios.hora',
                 'servicio_diarios.servicios',
                 'users.name',
+                'users.id as id_user',
                 'clientes.nombre',
                 'clientes.apellido',
+                'clientes.id as id_cliente',
                 'clientes.tipo_vehiculo'
             )
             ->get();
@@ -144,11 +152,14 @@ class ServiciosDiariosController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $servicios = $request->get('servicios'.''.$id);
+        $serviciosString = implode(',', $servicios);
+
         $clienteserviciodiario = ServicioDiario::find($id);
         $clienteserviciodiario->fecha = $request->get('fecha');
         $clienteserviciodiario->hora = $request->get('hora');
         $clienteserviciodiario->user_id = $request->get('user_id');
-        $clienteserviciodiario->servicio_id = $request->get('servicio_id');
+        $clienteserviciodiario->servicios = $serviciosString;
         $clienteserviciodiario->save();
 
         return redirect()->route('serviciosdiarios');
@@ -161,7 +172,7 @@ class ServiciosDiariosController extends Controller
     {
         //
         $clienteserviciodiario = ServicioDiario::find($id);
-        $clienteserviciodiario->estado = 'i';
+        $clienteserviciodiario->estado = 'ac';
 
         $clienteserviciodiario->save();
 

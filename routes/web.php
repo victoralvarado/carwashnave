@@ -51,6 +51,23 @@ Route::middleware([
         ->name('clientes.update');
 });
 
+Route::middleware([
+    'auth:sanctum',
+    'verified'
+])->group(function () {
+    Route::get('cobros', 'App\Http\Controllers\CobrosController@index')
+        ->name('cobros');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    'verified'
+])->group(function () {
+    Route::post('cobros', 'App\Http\Controllers\CobrosController@generarFacturaPDF')
+    ->name('cobros');
+});
+
+
 
 Route::middleware([
     'auth:sanctum',
@@ -58,4 +75,12 @@ Route::middleware([
 ])->group(function () {
     Route::get('dashboard', 'App\Http\Controllers\ServiciosDiariosController@mostrarDatosUsuario')
         ->name('dashboard');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    'verified'
+])->group(function () {
+    Route::post('registroservicios', 'App\Http\Controllers\RegistroServiciosController@store')
+        ->name('registroservicios');
 });

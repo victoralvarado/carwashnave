@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\HistorialCliente;
 use App\Models\RegistroServicio;
 use App\Models\ServicioDiario;
 use Illuminate\Http\Request;
@@ -33,17 +34,25 @@ class RegistroServiciosController extends Controller
     public function store(Request $request)
     {
         //Guardar servicio en la base de datos
-        $registroServicio = new RegistroServicio();
+        $descripcionservicio = "El empleado: " . $request->get('user') . " realizo los servicios de: "
+        . $request->get('servicios') . " con el cliente: " . $request->get('cliente') . " vehiculo: "
+        . $request->get('vehiculo') . " el dia: " . $request->get('fecha_servicio');
 
-        $registroServicio->servicio_diario_id = $request->servicio_diario_id;
-        $registroServicio->descripcion_servicio_realizado = $request->descripcion_servicio_realizado;
-        $registroServicio->comentarios = $request->comentarios;
+        $registroServicio = new RegistroServicio();
+        $registroServicio->servicio_diario_id = $request->get('servicio_diario_id');
+        $registroServicio->descripcion_servicio_realizado = $descripcionservicio;
+        $registroServicio->comentarios = $request->get('comentarios');
+        $registroServicio->save();
+
+        $registroHistorial = new HistorialCliente();
+        $registroHistorial->cliente_id = $request->get('cliente_id');
+        $registroHistorial->fecha_servicio = $request->get('fecha_servicio');
+        $registroHistorial->descripcion_servicio_realizado = $descripcionservicio;
+        $registroHistorial->save();
 
         // Modificar estado del servicio
-        $clienteserviciodiario = ServicioDiario::find($request->servicio_diario_id);
+        $clienteserviciodiario = ServicioDiario::find($request->get('servicio_diario_id'));
         $clienteserviciodiario->estado = 'i';
-
-        $registroServicio->save();
         $clienteserviciodiario->save();
 
         return redirect()->route('dashboard');

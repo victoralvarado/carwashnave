@@ -18,9 +18,18 @@
                     <x-nav-link href="{{ route('serviciosdiarios') }}" :active="request()->routeIs('serviciosdiarios')">
                         {{ __('Servicios Diarios') }}
                     </x-nav-link>
+                    <!--@if (Auth::user()->role == 'administrador')
                     <x-nav-link href="{{ route('clientes') }}" :active="request()->routeIs('clientes')">
                         {{ __('Clientes') }}
                     </x-nav-link>
+                    @endif-->
+                    <x-nav-link href="{{ route('clientes') }}" :active="request()->routeIs('clientes')">
+                        {{ __('Clientes') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('cobros') }}" :active="request()->routeIs('cobros')">
+                        {{ __('Cobros') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -163,6 +172,16 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('serviciosdiarios') }}" :active="request()->routeIs('serviciosdiarios')">
                 {{ __('Servicios Diarios') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('clientes') }}" :active="request()->routeIs('clientes')">
+                {{ __('Clientes') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('cobros') }}" :active="request()->routeIs('cobros')">
+                {{ __('Cobros') }}
             </x-responsive-nav-link>
         </div>
 

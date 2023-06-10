@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cobro;
+use App\Models\Servicio;
+use App\Models\ServicioDiario;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class CobrosController extends Controller
@@ -13,6 +16,28 @@ class CobrosController extends Controller
     public function index()
     {
         //
+        $servicios = Servicio::where('estado', 'a')->get();
+
+        $serviciosdiarioscobros = ServicioDiario::join('cliente_servicio_diarios', 'servicio_diarios.id', '=', 'cliente_servicio_diarios.servicio_diario_id')
+            ->join('users', 'servicio_diarios.user_id', '=', 'users.id')
+            ->join('clientes', 'cliente_servicio_diarios.cliente_id', '=', 'clientes.id')
+            ->where('servicio_diarios.estado', '=', 'ac')
+            ->select(
+                'servicio_diarios.id',
+                'servicio_diarios.fecha',
+                'servicio_diarios.hora',
+                'servicio_diarios.servicios',
+                'users.name',
+                'users.id as id_user',
+                'clientes.nombre',
+                'clientes.apellido',
+                'clientes.id as id_cliente',
+                'clientes.tipo_vehiculo',
+            )
+            ->get();
+
+
+        return view('cobros.index', compact('serviciosdiarioscobros', 'servicios'));
     }
 
     /**
@@ -55,11 +80,38 @@ class CobrosController extends Controller
         //
     }
 
+    public function generarFacturaPDF(Request $request)
+    {
+        $total = $request->get('total');
+        $cliente = $request->get('cliente');
+        $servicios = $request->get('servicios');
+
+        $data = [
+            'total' => $total,
+            'cliente' => $cliente,
+            'servicios' => $servicios,
+        ];
+        $clienteserviciodiario = ServicioDiario::find($request->get('id'));
+        $clienteserviciodiario->estado = 'i';
+
+        $clienteserviciodiario->save();
+
+        $pdf = Pdf::loadView('pdf.factura', $data);
+        return $pdf->stream('factura.pdf');
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cobro $cobro)
+    public function destroy(string $id)
     {
         //
+        $clienteserviciodiario = ServicioDiario::find($id);
+        $clienteserviciodiario->estado = 'i';
+
+        $clienteserviciodiario->save();
+
+        return redirect()->route('cobros');
     }
 }

@@ -180,17 +180,24 @@
                                                                     class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                                                                     Completar
                                                                     Servicio</h3>
-                                                                <form class="space-y-6" action="#">
+                                                                <form class="space-y-6" action="/registroservicios" method="POST">
+                                                                    @csrf
                                                                     <div>
-
-                                                                        <label for="completar-servicio-1"
+                                                                        <label for="completar-servicio-{{ $servicio->id }}"
                                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comentario
                                                                             (Opcional)
                                                                         </label>
-                                                                        <textarea id="completar-servicio-1" rows="4"
+                                                                        <textarea id="completar-servicio-{{ $servicio->id }}" name="comentarios" rows="4"
                                                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                                             placeholder="Escriba un comentario..."></textarea>
-
+                                                                        <input type="hidden" name="servicio_diario_id" value="{{ $servicio->id }}">
+                                                                        <input type="hidden" name="cliente_id" value="{{ $servicio->id_cliente }}">
+                                                                        <input type="hidden" name="cliente" value="{{ $servicio->nombre }} {{ $servicio->apellido }}">
+                                                                        <input type="hidden" name="id_user" value="{{ $servicio->id_user }}">
+                                                                        <input type="hidden" name="user" value="{{ $servicio->name }}">
+                                                                        <input type="hidden" name="servicios" value="{{ $servicio->servicios }}">
+                                                                        <input type="hidden" name="vehiculo" value="{{ $servicio->tipo_vehiculo }}">
+                                                                        <input type="hidden" name="fecha_servicio" value="{{ $servicio->fecha }}">
                                                                     </div>
 
                                                                     <button type="submit"
