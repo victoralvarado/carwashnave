@@ -65,4 +65,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(ServicioDiario::class);
     }
+
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
+
 }

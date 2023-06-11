@@ -12,10 +12,14 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use App\Http\Controllers\AuthRegisteredUserController;
+
 
 Route::get('/', function () {
     return view('auth.login');
 });
+
+Route::post('/register', AuthRegisteredUserController::class)->name('register');
 
 Route::middleware([
     'auth:sanctum',
@@ -32,55 +36,43 @@ Route::middleware([
 
     Route::put('serviciosdiarios/{id}', 'App\Http\Controllers\ServiciosDiariosController@update')
         ->name('serviciosdiarios.update');
-});
 
-Route::middleware([
-    'auth:sanctum',
-    'verified'
-])->group(function () {
-    Route::get('clientes', 'App\Http\Controllers\ClientesController@index')
-        ->name('clientes');
+    Route::group(['middleware' => 'role:administrador,recepcionista'], function () {
+        Route::get('clientes', 'App\Http\Controllers\ClientesController@index')
+            ->name('clientes');
 
-    Route::post('clientes', 'App\Http\Controllers\ClientesController@store')
-        ->name('clientes');
+        Route::post('clientes', 'App\Http\Controllers\ClientesController@store')
+            ->name('clientes');
 
-    Route::delete('clientes/{id}', 'App\Http\Controllers\ClientesController@destroy')
-        ->name('clientes.destroy');
+        Route::delete('clientes/{id}', 'App\Http\Controllers\ClientesController@destroy')
+            ->name('clientes.destroy');
 
-    Route::put('clientes/{id}', 'App\Http\Controllers\ClientesController@update')
-        ->name('clientes.update');
-});
+        Route::put('clientes/{id}', 'App\Http\Controllers\ClientesController@update')
+            ->name('clientes.update');
+    });
+    Route::group(['middleware' => 'role:recepcionista'], function () {
+        Route::get('clientes', 'App\Http\Controllers\ClientesController@index')
+            ->name('clientes');
 
-Route::middleware([
-    'auth:sanctum',
-    'verified'
-])->group(function () {
+        Route::post('clientes', 'App\Http\Controllers\ClientesController@store')
+            ->name('clientes');
+
+        Route::delete('clientes/{id}', 'App\Http\Controllers\ClientesController@destroy')
+            ->name('clientes.destroy');
+
+        Route::put('clientes/{id}', 'App\Http\Controllers\ClientesController@update')
+            ->name('clientes.update');
+    });
+
     Route::get('cobros', 'App\Http\Controllers\CobrosController@index')
         ->name('cobros');
-});
 
-Route::middleware([
-    'auth:sanctum',
-    'verified'
-])->group(function () {
     Route::post('cobros', 'App\Http\Controllers\CobrosController@generarFacturaPDF')
-    ->name('cobros');
-});
+        ->name('cobros');
 
-
-
-Route::middleware([
-    'auth:sanctum',
-    'verified'
-])->group(function () {
     Route::get('dashboard', 'App\Http\Controllers\ServiciosDiariosController@mostrarDatosUsuario')
         ->name('dashboard');
-});
 
-Route::middleware([
-    'auth:sanctum',
-    'verified'
-])->group(function () {
     Route::post('registroservicios', 'App\Http\Controllers\RegistroServiciosController@store')
         ->name('registroservicios');
 });

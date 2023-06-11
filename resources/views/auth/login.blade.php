@@ -146,6 +146,11 @@
 <body>
     <x-guest-layout>
         <x-authentication-card>
+            @if (Session::has('success'))
+                <div class="alert alert-success" style="color:green">
+                    {{ Session::get('success') }}
+                </div>
+            @endif
             <h1 class="bienvenido my-0">Carwash La Nave</h1>
             <p class="slogan text-center">Tu mejor opción para lavado de autos</p>
             <x-slot name="logo">

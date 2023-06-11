@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
                     <x-application-logo class="block h-12 w-auto" />
-                    @if (Auth::user()->role == 'administrador')
+                    @if (Auth::user()->role == 'administrador' || Auth::user()->role == 'recepcionista')
                         <h1 class="mt-8 text-2xl font-medium text-gray-900">
                             Lista de Clientes Asignados a Empleados</b>
                         </h1>
@@ -20,7 +20,7 @@
                         </h1>
                     @endif
                 </div>
-                @if (Auth::user()->role == 'administrador')
+                @if (Auth::user()->role == 'administrador' || Auth::user()->role == 'recepcionista')
                     <div class="grid grid-cols-1 md:grid-cols-1 gap-4 mb-4 p-6 lg:p-8 bg-white border-b border-gray-200">
                         <div class="relative overflow-x-auto">
                             <table class="w-full border-collapse border-2 border-gray-500">
