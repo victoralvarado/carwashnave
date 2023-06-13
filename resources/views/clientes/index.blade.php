@@ -217,7 +217,7 @@
                                                                     </button>
                                                                     <button
                                                                         data-modal-hide="modificar-cliente-modal-{{ $cliente->id }}"
-                                                                        type="button"
+                                                                        type="button" onclick="location.reload()"
                                                                         class="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
                                                                         Cancelar
                                                                     </button>
@@ -227,16 +227,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <form action="{{ route('clientes.destroy', $cliente->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button
-                                                    class="shadow bg-red-500 hover:bg-red-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-                                                    type="submit">
-                                                    Eliminar
-                                                </button>
-                                            </form>
+                                            @if (Auth::user()->role == 'administrador')
+                                                <form action="{{ route('clientes.destroy', $cliente->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button
+                                                        class="shadow bg-red-500 hover:bg-red-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                                        type="submit">
+                                                        Eliminar
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
