@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class AuthRegisteredUserController extends Controller
+class UserController extends Controller
 {
     /**
      * Handle the incoming request.

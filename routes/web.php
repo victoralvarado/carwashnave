@@ -12,14 +12,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-use App\Http\Controllers\AuthRegisteredUserController;
-
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::post('/register', AuthRegisteredUserController::class)->name('register');
+Route::post('/register', UserController::class)->name('register');
 
 Route::middleware([
     'auth:sanctum',

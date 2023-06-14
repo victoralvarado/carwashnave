@@ -230,7 +230,8 @@
                                                                                 id="grid-tipo-servicio"
                                                                                 value="{{ $opcion->descripcion_servicio }}"
                                                                                 {{ in_array($opcion->descripcion_servicio, $valuesArray) ? 'checked' : '' }}>
-                                                                            {{ $opcion->descripcion_servicio }} (${{ $opcion->precio }}).&nbsp;
+                                                                            {{ $opcion->descripcion_servicio }}
+                                                                            (${{ $opcion->precio }}).&nbsp;
                                                                         </label>
                                                                     @endforeach
                                                                 </div>

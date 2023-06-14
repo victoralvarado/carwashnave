@@ -52,7 +52,7 @@ class RegistroServiciosController extends Controller
 
         // Modificar estado del servicio
         $clienteserviciodiario = ServicioDiario::find($request->get('servicio_diario_id'));
-        $clienteserviciodiario->estado = 'i';
+        $clienteserviciodiario->estado = 'ac';
         $clienteserviciodiario->save();
 
         return redirect()->route('dashboard');
