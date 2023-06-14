@@ -25,6 +25,11 @@ Route::middleware([
     'verified'
 ])->group(function () {
 
+    Route::middleware(['role:administrador'])->group(function () {
+        Route::get('usuarios', 'App\Http\Controllers\UserController@index')
+        ->name('usuarios');
+    });
+
     Route::middleware(['role:administrador,recepcionista'])->group(function () {
         Route::get('clientes', 'App\Http\Controllers\ClientesController@index')
             ->name('clientes');

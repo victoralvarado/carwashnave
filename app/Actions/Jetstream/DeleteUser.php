@@ -16,7 +16,14 @@ class DeleteUser implements DeletesUsers
         $user->tokens->each->delete();
         $user->delete();*/
         // Actualiza el campo 'estado' a 'i'
-        $user->estado = 'i';
-        $user->save();
+        //$user->estado = 'i';
+        //$user->save();
+        $userId = $user->id;
+        if ($userId === 1) {
+            return ;
+        }else{
+            $user->estado = 'i';
+            $user->save();
+        }
     }
 }

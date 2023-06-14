@@ -35,4 +35,12 @@ class UserController extends Controller
 
         return redirect('/');
     }
+
+    public function index()
+    {
+        //
+        $usuarios = User::all();
+        return view('usuarios.index')->with('usuarios',$usuarios);
+    }
+
 }

@@ -26,6 +26,11 @@
                             {{ __('Cobros') }}
                         </x-nav-link>
                     @endif
+                    @if (Auth::user()->role == 'administrador')
+                        <x-nav-link href="{{ route('usuarios') }}" :active="request()->routeIs('usuarios')">
+                            {{ __('Usuarios') }}
+                        </x-nav-link>
+                    @endif
 
                 </div>
             </div>
@@ -180,6 +185,13 @@
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('cobros') }}" :active="request()->routeIs('cobros')">
                     {{ __('Cobros') }}
+                </x-responsive-nav-link>
+            </div>
+        @endif
+        @if (Auth::user()->role == 'administrador')
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('usuarios') }}" :active="request()->routeIs('usuarios')">
+                    {{ __('Usuarios') }}
                 </x-responsive-nav-link>
             </div>
         @endif
