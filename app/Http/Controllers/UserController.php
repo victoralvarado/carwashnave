@@ -56,4 +56,14 @@ class UserController extends Controller
         return redirect()->route('usuarios');
     }
 
+
+    public function update(Request $request, string $id)
+    {
+        //
+        $usuario = User::find($id);
+        $usuario->role = $request->get('role');
+        $usuario->save();
+        return redirect()->route('usuarios');
+    }
+
 }

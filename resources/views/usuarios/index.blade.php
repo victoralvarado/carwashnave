@@ -29,25 +29,24 @@
                             @foreach ($usuarios as $usuario)
                                 <tr>
                                     @if ($usuario->id != 1)
-                                    <td class="border border-gray-400 px-4 py-2">{{ $usuario->id }}</td>
-                                    <td class="border border-gray-400 px-4 py-2">{{ $usuario->name }}</td>
-                                    <td class="border border-gray-400 px-4 py-2">{{ $usuario->email }}</td>
-                                    <td class="border border-gray-400 px-4 py-2">{{ ucfirst($usuario->role) }}</td>
-                                    <td class="border border-gray-400 px-4 py-2">
-                                        {{ $usuario->estado == 'a' ? 'Activo' : 'Inactivo' }}</td>
-
+                                        <td class="border border-gray-400 px-4 py-2">{{ $usuario->id }}</td>
+                                        <td class="border border-gray-400 px-4 py-2">{{ $usuario->name }}</td>
+                                        <td class="border border-gray-400 px-4 py-2">{{ $usuario->email }}</td>
+                                        <td class="border border-gray-400 px-4 py-2">{{ ucfirst($usuario->role) }}</td>
+                                        <td class="border border-gray-400 px-4 py-2">
+                                            {{ $usuario->estado == 'a' ? 'Activo' : 'Inactivo' }}
+                                        </td>
                                         <td class="border border-gray-400 px-4 py-2">
                                             <!-- Modal toggle -->
-                                            <button
-                                                data-modal-target="modificar-serviciodiario-modal-{{ $usuario->id }}"
-                                                data-modal-toggle="modificar-serviciodiario-modal-{{ $usuario->id }}"
+                                            <button data-modal-target="habilitar-usuario-modal-{{ $usuario->id }}"
+                                                data-modal-toggle="habilitar-usuario-modal-{{ $usuario->id }}"
                                                 class="shadow my-1 {{ $usuario->estado == 'a' ? 'bg-orange-500' : 'bg-green-500' }} hover:{{ $usuario->estado == 'a' ? 'bg-orage-300' : 'bg-green-400' }} focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                                                 type="button">
                                                 {{ $usuario->estado == 'a' ? 'Deshabilitar' : 'Habilitar' }}
                                             </button>
 
                                             <!-- Main modal -->
-                                            <div id="modificar-serviciodiario-modal-{{ $usuario->id }}" tabindex="-1"
+                                            <div id="habilitar-usuario-modal-{{ $usuario->id }}" tabindex="-1"
                                                 aria-hidden="true"
                                                 class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                                 <div class="relative w-full max-w-md max-h-full">
@@ -55,7 +54,7 @@
                                                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                                         <button type="button"
                                                             class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                                                            data-modal-hide="modificar-serviciodiario-modal-{{ $usuario->id }}">
+                                                            data-modal-hide="habilitar-usuario-modal-{{ $usuario->id }}">
                                                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
                                                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                                 <path fill-rule="evenodd"
@@ -71,8 +70,10 @@
                                                             </h3>
                                                             <form action="/usuarios" method="POST">
                                                                 @csrf
-                                                                <input type="hidden" name="id" value="{{ $usuario->id }}" />
-                                                                <input type="hidden" name="estado" value="{{ $usuario->estado }}" />
+                                                                <input type="hidden" name="id"
+                                                                    value="{{ $usuario->id }}" />
+                                                                <input type="hidden" name="estado"
+                                                                    value="{{ $usuario->estado }}" />
                                                                 <button
                                                                     class="shadow bg-red-500 hover:bg-red-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                                                                     type="submit">
@@ -83,6 +84,82 @@
                                                                     type="button" onclick="location.reload()">
                                                                     Cancelar
                                                                 </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Modal toggle -->
+                                            <button data-modal-target="modificar-usuario-modal-{{ $usuario->id }}"
+                                                data-modal-toggle="modificar-usuario-modal-{{ $usuario->id }}"
+                                                class="shadow my-1 bg-pink-500 hover:bg-pink-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                                type="button">
+                                                Cambiar Rol
+                                            </button>
+
+                                            <!-- Main modal -->
+                                            <div id="modificar-usuario-modal-{{ $usuario->id }}" tabindex="-1"
+                                                aria-hidden="true"
+                                                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                                <div class="relative w-full max-w-md max-h-full">
+                                                    <!-- Modal content -->
+                                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                        <button type="button"
+                                                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                                                            data-modal-hide="modificar-usuario-modal-{{ $usuario->id }}">
+                                                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
+                                                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                    clip-rule="evenodd"></path>
+                                                            </svg>
+                                                            <span class="sr-only">Cerrar</span>
+                                                        </button>
+                                                        <div class="px-6 py-6 lg:px-8">
+                                                            <h3
+                                                                class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+                                                                Modificar Rol
+                                                            </h3>
+                                                            <form action="/usuarios/{{ $usuario->id }}" method="POST"
+                                                                class="space-y-6">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <div class="flex flex-wrap -mx-3 mb-6">
+                                                                    <label
+                                                                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                                                        for="grid-rol">
+                                                                        Rol
+                                                                    </label>
+                                                                    <select
+                                                                        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                                                        id="grid-rol" name="role" required>
+                                                                        <option value="" selected>
+                                                                            Seleccionar Rol</option>
+                                                                        <option value="empleado"
+                                                                            {{ $usuario->role == 'empleado' ? 'selected' : '' }}>
+                                                                            Empleado
+                                                                        </option>
+                                                                        <option value="administrador"
+                                                                            {{ $usuario->role == 'administrador' ? 'selected' : '' }}>
+                                                                            Administrador</option>
+                                                                        <option value="recepcionista"
+                                                                            {{ $usuario->role == 'recepcionista' ? 'selected' : '' }}>
+                                                                            Recepcionista</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="text-center">
+                                                                    <button
+                                                                        class="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                                                                        type="submit">
+                                                                        Modificar
+                                                                    </button>
+                                                                    <button
+                                                                        data-modal-hide="modificar-usuario-modal-{{ $usuario->id }}"
+                                                                        type="button" onclick="location.reload()"
+                                                                        class="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
+                                                                        Cancelar
+                                                                    </button>
+                                                                </div>
                                                             </form>
                                                         </div>
                                                     </div>

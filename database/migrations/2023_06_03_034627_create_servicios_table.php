@@ -1,5 +1,6 @@
 <?php
 
+use Database\Seeders\ServiciosTableSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,8 @@ return new class extends Migration {
             $table->decimal('precio', 10, 2)->nullable();
             $table->timestamps();
         });
+
+        Artisan::call('db:seed', ['--class' => 'ServiciosTableSeeder']);
     }
 
     /**

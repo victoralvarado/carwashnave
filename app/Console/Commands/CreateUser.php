@@ -27,13 +27,15 @@ class CreateUser extends Command
     public function handle()
     {
         //php artisan app:create-user
+        $id = 1;
         $name = 'Administrador';
-        $email = 'alvarado.test.sv@gmail.com';
+        $email = 'admin@carwashnave.com';
         $password = 'Admin123!';
         $role = 'administrador';
         $estado = 'a';
 
         $user = new User();
+        $user->id = $id;
         $user->name = $name;
         $user->email = $email;
         $user->password = Hash::make($password);
@@ -41,6 +43,6 @@ class CreateUser extends Command
         $user->estado = $estado;
         $user->save();
 
-        $this->info('Usuario creado!');
+        $this->info('Usuario administrador creado!');
     }
 }

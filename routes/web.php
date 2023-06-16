@@ -31,6 +31,9 @@ Route::middleware([
 
         Route::post('usuarios', 'App\Http\Controllers\UserController@habilitarInhabilitar')
         ->name('usuarios');
+
+        Route::put('usuarios/{id}', 'App\Http\Controllers\UserController@update')
+            ->name('usuarios.update');
     });
 
     Route::middleware(['role:administrador,recepcionista'])->group(function () {

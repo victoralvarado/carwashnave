@@ -246,7 +246,7 @@
                                                                     <select
                                                                         class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                                                         id="grid-cliente" name="cliente_id" required>
-                                                                        <option value="" selected disabled>
+                                                                        <option value="" selected>
                                                                             Seleccionar Cliente</option>
                                                                         @foreach ($clientes as $opcion)
                                                                             <option value="{{ $opcion->id }}"

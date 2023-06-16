@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 return new class extends Migration {
     /**
@@ -23,6 +24,24 @@ return new class extends Migration {
             $table->enum('estado', ['a', 'i'])->default('i');
             $table->timestamps();
         });
+
+        $id = 1;
+        $name = 'Administrador';
+        $email = 'admin@carwashnave.com';
+        $password = 'Admin123!';
+        $role = 'administrador';
+        $estado = 'a';
+
+        $user = new User();
+        $user->id = $id;
+        $user->name = $name;
+        $user->email = $email;
+        $user->password = Hash::make($password);
+        $user->role = $role;
+        $user->estado = $estado;
+        $user->save();
+
+        echo 'Usuario administrador creado!';
     }
 
     /**
