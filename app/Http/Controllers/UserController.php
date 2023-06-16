@@ -15,7 +15,7 @@ class UserController extends Controller
     public function __invoke(Request $request)
     {
         //
-        $validator = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
@@ -23,7 +23,7 @@ class UserController extends Controller
 
 
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -41,6 +41,19 @@ class UserController extends Controller
         //
         $usuarios = User::all();
         return view('usuarios.index')->with('usuarios',$usuarios);
+    }
+
+
+    public function habilitarInhabilitar(Request $request)
+    {
+        $usuario = User::find($request->get('id'));
+        if ($request->get('estado') == 'a') {
+            $usuario->estado = 'i';
+        }else{
+            $usuario->estado = 'a';
+        }
+        $usuario->save();
+        return redirect()->route('usuarios');
     }
 
 }

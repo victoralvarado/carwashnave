@@ -71,6 +71,8 @@
                                                             </h3>
                                                             <form action="/usuarios" method="POST">
                                                                 @csrf
+                                                                <input type="hidden" name="id" value="{{ $usuario->id }}" />
+                                                                <input type="hidden" name="estado" value="{{ $usuario->estado }}" />
                                                                 <button
                                                                     class="shadow bg-red-500 hover:bg-red-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                                                                     type="submit">

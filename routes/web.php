@@ -28,6 +28,9 @@ Route::middleware([
     Route::middleware(['role:administrador'])->group(function () {
         Route::get('usuarios', 'App\Http\Controllers\UserController@index')
         ->name('usuarios');
+
+        Route::post('usuarios', 'App\Http\Controllers\UserController@habilitarInhabilitar')
+        ->name('usuarios');
     });
 
     Route::middleware(['role:administrador,recepcionista'])->group(function () {

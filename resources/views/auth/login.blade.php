@@ -147,7 +147,7 @@
     <x-guest-layout>
         <x-authentication-card>
             @if (Session::has('success'))
-                <div class="alert alert-success" style="color:green">
+                <div class="text-center bg-green-100 font-bold mb-4 font-medium text-sm text-green-600">
                     {{ Session::get('success') }}
                 </div>
             @endif
