@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Servicio;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -39,8 +40,9 @@ class UserController extends Controller
     public function index()
     {
         //
-        $usuarios = User::all();
-        return view('usuarios.index')->with('usuarios',$usuarios);
+        $usuarios = User::paginate(5);
+        $servicios = Servicio::all();
+        return view('usuarios.index', compact('usuarios', 'servicios'));
     }
 
 

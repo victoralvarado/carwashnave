@@ -27,13 +27,27 @@ Route::middleware([
 
     Route::middleware(['role:administrador'])->group(function () {
         Route::get('usuarios', 'App\Http\Controllers\UserController@index')
-        ->name('usuarios');
+            ->name('usuarios');
 
         Route::post('usuarios', 'App\Http\Controllers\UserController@habilitarInhabilitar')
-        ->name('usuarios');
+            ->name('usuarios');
 
         Route::put('usuarios/{id}', 'App\Http\Controllers\UserController@update')
             ->name('usuarios.update');
+
+
+        Route::post('servicios', 'App\Http\Controllers\ServiciosController@store')
+            ->name('servicios');
+
+        Route::post('servicios', 'App\Http\Controllers\ServiciosController@estado')
+            ->name('servicios.estado');
+
+        Route::put('servicios/{id}', 'App\Http\Controllers\ServiciosController@update')
+            ->name('servicios.update');
+
+
+        Route::get('historial', 'App\Http\Controllers\HistorialClientesController@index')
+            ->name('historial');
     });
 
     Route::middleware(['role:administrador,recepcionista'])->group(function () {

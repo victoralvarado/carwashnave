@@ -32,6 +32,23 @@ class ServiciosController extends Controller
     public function store(Request $request)
     {
         //
+        $servicio = new Servicio();
+        $servicio->descripcion_servicio = $request->get('descripcion_servicio');
+        $servicio->precio = $request->get('precio');
+        $servicio->save();
+        return redirect()->route('usuarios');
+    }
+
+    public function estado(Request $request)
+    {
+        $servicio = Servicio::find($request->get('id'));
+        if ($request->get('estado') == 'a') {
+            $servicio->estado = 'i';
+        } else {
+            $servicio->estado = 'a';
+        }
+        $servicio->save();
+        return redirect()->route('usuarios');
     }
 
     /**
@@ -53,9 +70,14 @@ class ServiciosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Servicio $servicio)
+    public function update(Request $request, string $id)
     {
         //
+        $servicio = Servicio::find($id);
+        $servicio->descripcion_servicio = $request->get('descripcion_servicio');
+        $servicio->precio = $request->get('precio');
+        $servicio->save();
+        return redirect()->route('usuarios');
     }
 
     /**

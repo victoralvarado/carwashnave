@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\HistorialCliente;
 use App\Models\RegistroServicio;
+use App\Models\Servicio;
 use App\Models\ServicioDiario;
 use Illuminate\Http\Request;
 
@@ -33,10 +34,24 @@ class RegistroServiciosController extends Controller
      */
     public function store(Request $request)
     {
+        //Obtener servicios y su precios de la base de datos
+        $serviciosArray = explode(',', $request->get('servicios'));
+        $total = 0;
+        $servicioprecio = "";
+
+        $resultados = Servicio::whereIn('descripcion_servicio', $serviciosArray)
+               ->get();
+        foreach ($resultados as $servicio) {
+            in_array($servicio->descripcion_servicio, $serviciosArray) ? ($precio = $servicio->precio) : ($precio = 0);
+            in_array($servicio->descripcion_servicio, $serviciosArray) ? ($serviciopreciounitario = $servicio->descripcion_servicio . " = $".$servicio->precio." ") : "";
+            $servicioprecio .= $serviciopreciounitario;
+            $total += $precio;
+        }
+
         //Guardar servicio en la base de datos
-        $descripcionservicio = "El empleado: " . $request->get('user') . " realizo los servicios de: "
-        . $request->get('servicios') . " con el cliente: " . $request->get('cliente') . " vehiculo: "
-        . $request->get('vehiculo') . " el dia: " . $request->get('fecha_servicio');
+        $descripcionservicio = "El empleado: " . $request->get('user') . ", realizo los servicios de: "
+            . $servicioprecio . " ($" . $total . "), con el cliente: " . $request->get('cliente') . ", vehiculo: "
+            . $request->get('vehiculo') . ", el dia: " . $request->get('fecha_servicio')." , hora: ". $request->get('hora_servicio').", comentarios: ". $request->get('comentarios');
 
         $registroServicio = new RegistroServicio();
         $registroServicio->servicio_diario_id = $request->get('servicio_diario_id');

@@ -28,7 +28,10 @@
                     @endif
                     @if (Auth::user()->role == 'administrador')
                         <x-nav-link href="{{ route('usuarios') }}" :active="request()->routeIs('usuarios')">
-                            {{ __('Usuarios') }}
+                            {{ __('Usuarios y Servicios') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('historial') }}" :active="request()->routeIs('historial')">
+                            {{ __('Historial Clientes') }}
                         </x-nav-link>
                     @endif
 
@@ -191,7 +194,12 @@
         @if (Auth::user()->role == 'administrador')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('usuarios') }}" :active="request()->routeIs('usuarios')">
-                    {{ __('Usuarios') }}
+                    {{ __('Usuarios y Servicios') }}
+                </x-responsive-nav-link>
+            </div>
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('historial') }}" :active="request()->routeIs('historial')">
+                    {{ __('Historial Clientes') }}
                 </x-responsive-nav-link>
             </div>
         @endif

@@ -26,14 +26,22 @@
                             <table class="w-full border-collapse border-2 border-gray-500">
                                 <thead>
                                     <tr>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Código</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Fecha</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Hora</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Cliente</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Empleado</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Tipo Vehiculo</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Servicio</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Acción</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Código</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Fecha</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Hora</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Cliente</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Empleado</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Tipo Vehiculo</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Servicio</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,24 +92,34 @@
                                                                     class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                                                                     Completar
                                                                     Servicio</h3>
-                                                                <form class="space-y-6" action="/registroservicios" method="POST">
+                                                                <form class="space-y-6" action="/registroservicios"
+                                                                    method="POST">
                                                                     @csrf
                                                                     <div>
-                                                                        <label for="completar-servicio-admin{{ $servicio->id }}"
+                                                                        <label
+                                                                            for="completar-servicio-admin{{ $servicio->id }}"
                                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comentario
                                                                             (Opcional)
                                                                         </label>
                                                                         <textarea id="completar-servicio-admin{{ $servicio->id }}" name="comentarios" rows="4"
                                                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                                             placeholder="Escriba un comentario..."></textarea>
-                                                                        <input type="hidden" name="servicio_diario_id" value="{{ $servicio->id }}">
-                                                                        <input type="hidden" name="cliente_id" value="{{ $servicio->id_cliente }}">
-                                                                        <input type="hidden" name="cliente" value="{{ $servicio->nombre }} {{ $servicio->apellido }}">
-                                                                        <input type="hidden" name="id_user" value="{{ $servicio->id_user }}">
-                                                                        <input type="hidden" name="user" value="{{ $servicio->name }}">
-                                                                        <input type="hidden" name="servicios" value="{{ $servicio->servicios }}">
-                                                                        <input type="hidden" name="vehiculo" value="{{ $servicio->tipo_vehiculo }}">
-                                                                        <input type="hidden" name="fecha_servicio" value="{{ $servicio->fecha }}">
+                                                                        <input type="hidden" name="servicio_diario_id"
+                                                                            value="{{ $servicio->id }}">
+                                                                        <input type="hidden" name="cliente_id"
+                                                                            value="{{ $servicio->id_cliente }}">
+                                                                        <input type="hidden" name="cliente"
+                                                                            value="{{ $servicio->nombre }} {{ $servicio->apellido }}">
+                                                                        <input type="hidden" name="id_user"
+                                                                            value="{{ $servicio->id_user }}">
+                                                                        <input type="hidden" name="user"
+                                                                            value="{{ $servicio->name }}">
+                                                                        <input type="hidden" name="servicios"
+                                                                            value="{{ $servicio->servicios }}">
+                                                                        <input type="hidden" name="vehiculo"
+                                                                            value="{{ $servicio->tipo_vehiculo }}">
+                                                                        <input type="hidden" name="fecha_servicio"
+                                                                            value="{{ $servicio->fecha }}">
                                                                     </div>
 
                                                                     <button type="submit"
@@ -131,13 +149,20 @@
                             <table class="w-full border-collapse border-2 border-gray-500">
                                 <thead>
                                     <tr>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Código</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Fecha</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Hora</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Cliente</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Tipo Vehiculo</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Servicios</th>
-                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">Acción</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Código</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Fecha</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Hora</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Cliente</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Tipo Vehiculo</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Servicios</th>
+                                        <th class="border text-xs uppercase border-gray-400 px-4 py-2 text-gray-800">
+                                            Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -148,7 +173,8 @@
                                             <td class="border border-gray-400 px-4 py-2">{{ $servicio->hora }}</td>
                                             <td class="border border-gray-400 px-4 py-2">{{ $servicio->nombre }}
                                                 {{ $servicio->apellido }}</td>
-                                            <td class="border border-gray-400 px-4 py-2">{{ $servicio->tipo_vehiculo }}
+                                            <td class="border border-gray-400 px-4 py-2">
+                                                {{ $servicio->tipo_vehiculo }}
                                             </td>
                                             <td class="border border-gray-400 px-4 py-2">
                                                 {{ $servicio->servicios }}
@@ -187,25 +213,35 @@
                                                                     class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                                                                     Completar
                                                                     Servicio</h3>
-                                                                <form class="space-y-6" action="/registroservicios" method="POST">
+                                                                <form class="space-y-6" action="/registroservicios"
+                                                                    method="POST">
                                                                     @csrf
-                                                                    <div>
-                                                                        <label for="completar-servicio-{{ $servicio->id }}"
-                                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comentario
-                                                                            (Opcional)
-                                                                        </label>
-                                                                        <textarea id="completar-servicio-{{ $servicio->id }}" name="comentarios" rows="4"
-                                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                                            placeholder="Escriba un comentario..."></textarea>
-                                                                        <input type="hidden" name="servicio_diario_id" value="{{ $servicio->id }}">
-                                                                        <input type="hidden" name="cliente_id" value="{{ $servicio->id_cliente }}">
-                                                                        <input type="hidden" name="cliente" value="{{ $servicio->nombre }} {{ $servicio->apellido }}">
-                                                                        <input type="hidden" name="id_user" value="{{ $servicio->id_user }}">
-                                                                        <input type="hidden" name="user" value="{{ $servicio->name }}">
-                                                                        <input type="hidden" name="servicios" value="{{ $servicio->servicios }}">
-                                                                        <input type="hidden" name="vehiculo" value="{{ $servicio->tipo_vehiculo }}">
-                                                                        <input type="hidden" name="fecha_servicio" value="{{ $servicio->fecha }}">
-                                                                    </div>
+                                                                    <label
+                                                                        for="completar-servicio-{{ $servicio->id }}"
+                                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comentario
+                                                                        (Opcional)
+                                                                    </label>
+                                                                    <textarea id="completar-servicio-{{ $servicio->id }}" name="comentarios" rows="4"
+                                                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                                        placeholder="Escriba un comentario..."></textarea>
+                                                                    <input type="hidden" name="servicio_diario_id"
+                                                                        value="{{ $servicio->id }}">
+                                                                    <input type="hidden" name="cliente_id"
+                                                                        value="{{ $servicio->id_cliente }}">
+                                                                    <input type="hidden" name="cliente"
+                                                                        value="{{ $servicio->nombre }} {{ $servicio->apellido }}">
+                                                                    <input type="hidden" name="id_user"
+                                                                        value="{{ $servicio->id_user }}">
+                                                                    <input type="hidden" name="user"
+                                                                        value="{{ $servicio->name }}">
+                                                                    <input type="hidden" name="servicios"
+                                                                        value="{{ $servicio->servicios }}">
+                                                                    <input type="hidden" name="vehiculo"
+                                                                        value="{{ $servicio->tipo_vehiculo }}">
+                                                                    <input type="hidden" name="fecha_servicio"
+                                                                        value="{{ $servicio->fecha }}">
+                                                                    <input type="hidden" name="hora_servicio"
+                                                                        value="{{ $servicio->hora }}">
 
                                                                     <button type="submit"
                                                                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Completar

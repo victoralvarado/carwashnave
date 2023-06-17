@@ -13,6 +13,18 @@ class HistorialClientesController extends Controller
     public function index()
     {
         //
+        $historialClientes = HistorialCliente::join('clientes', 'historial_clientes.cliente_id', '=', 'clientes.id')
+        ->select(
+            'historial_clientes.id',
+            'historial_clientes.fecha_servicio',
+            'clientes.nombre',
+            'clientes.apellido',
+            'historial_clientes.descripcion_servicio_realizado',
+            'historial_clientes.created_at'
+        )
+        ->orderBy('historial_clientes.created_at', 'desc')
+        ->paginate(10);
+        return view('historial.index', compact('historialClientes'));
     }
 
     /**
