@@ -84,12 +84,13 @@ class CobrosController extends Controller
     {
         $total = $request->get('total');
         $cliente = $request->get('cliente');
-        $servicios = $request->get('servicios');
-
+        $serviciosArray = explode(',', $request->get('servicios'));
+        $resultados = Servicio::whereIn('descripcion_servicio', $serviciosArray)
+        ->get();
         $data = [
             'total' => $total,
             'cliente' => $cliente,
-            'servicios' => $servicios,
+            'servicios' => $resultados,
         ];
         $clienteserviciodiario = ServicioDiario::find($request->get('id'));
         $clienteserviciodiario->estado = 'i';

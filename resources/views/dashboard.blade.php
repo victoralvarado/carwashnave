@@ -120,6 +120,8 @@
                                                                             value="{{ $servicio->tipo_vehiculo }}">
                                                                         <input type="hidden" name="fecha_servicio"
                                                                             value="{{ $servicio->fecha }}">
+                                                                        <input type="hidden" name="hora_servicio"
+                                                                            value="{{ $servicio->hora }}">
                                                                     </div>
 
                                                                     <button type="submit"
@@ -224,25 +226,27 @@
                                                                     <textarea id="completar-servicio-{{ $servicio->id }}" name="comentarios" rows="4"
                                                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                                         placeholder="Escriba un comentario..."></textarea>
-                                                                    <input type="hidden" name="servicio_diario_id"
-                                                                        value="{{ $servicio->id }}">
-                                                                    <input type="hidden" name="cliente_id"
-                                                                        value="{{ $servicio->id_cliente }}">
-                                                                    <input type="hidden" name="cliente"
-                                                                        value="{{ $servicio->nombre }} {{ $servicio->apellido }}">
-                                                                    <input type="hidden" name="id_user"
-                                                                        value="{{ $servicio->id_user }}">
-                                                                    <input type="hidden" name="user"
-                                                                        value="{{ $servicio->name }}">
-                                                                    <input type="hidden" name="servicios"
-                                                                        value="{{ $servicio->servicios }}">
-                                                                    <input type="hidden" name="vehiculo"
-                                                                        value="{{ $servicio->tipo_vehiculo }}">
-                                                                    <input type="hidden" name="fecha_servicio"
-                                                                        value="{{ $servicio->fecha }}">
-                                                                    <input type="hidden" name="hora_servicio"
-                                                                        value="{{ $servicio->hora }}">
-
+                                                                    <div>
+                                                                        <input type="hidden"
+                                                                            name="servicio_diario_id"
+                                                                            value="{{ $servicio->id }}">
+                                                                        <input type="hidden" name="cliente_id"
+                                                                            value="{{ $servicio->id_cliente }}">
+                                                                        <input type="hidden" name="cliente"
+                                                                            value="{{ $servicio->nombre }} {{ $servicio->apellido }}">
+                                                                        <input type="hidden" name="id_user"
+                                                                            value="{{ $servicio->id_user }}">
+                                                                        <input type="hidden" name="user"
+                                                                            value="{{ $servicio->name }}">
+                                                                        <input type="hidden" name="servicios"
+                                                                            value="{{ $servicio->servicios }}">
+                                                                        <input type="hidden" name="vehiculo"
+                                                                            value="{{ $servicio->tipo_vehiculo }}">
+                                                                        <input type="hidden" name="fecha_servicio"
+                                                                            value="{{ $servicio->fecha }}">
+                                                                        <input type="hidden" name="hora_servicio"
+                                                                            value="{{ $servicio->hora }}">
+                                                                    </div>
                                                                     <button type="submit"
                                                                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Completar
                                                                         Servicio</button>
