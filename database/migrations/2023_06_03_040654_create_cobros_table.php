@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreign('servicio_diario_id')->references('id')->on('servicio_diarios');
             $table->decimal('monto_cobro', 8, 2);
             $table->dateTime('fecha_hora_cobro');
-            $table->enum('estado', ['a', 'i'])->default('a');
+            $table->enum('estado', ['a', 'i', 'e'])->default('a');
             $table->timestamps();
         });
     }

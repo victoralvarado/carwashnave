@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->dateTime('fecha_hora_cita');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->enum('estado', ['a', 'i'])->default('a');
+            $table->enum('estado', ['a', 'i', 'e'])->default('a');
             $table->timestamps();
         });
     }

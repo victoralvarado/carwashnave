@@ -13,7 +13,7 @@ class ClientesController extends Controller
     public function index()
     {
         //
-        $clientes = Cliente::where('estado', 'a')->get();
+        $clientes = Cliente::where('estado','!=', 'e')->get();
         return view('clientes.index')->with('clientes',$clientes);
     }
 
@@ -81,7 +81,7 @@ class ClientesController extends Controller
     {
         //
         $cliente = Cliente::find($id);
-        $cliente->estado = 'i';
+        $cliente->estado = 'e';
 
         $cliente->save();
         return redirect()->route('clientes');

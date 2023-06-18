@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('servicios');
-            $table->enum('estado', ['a','ac','i'])->default('a');
+            $table->enum('estado', ['a','ac','i', 'e'])->default('a');
             $table->timestamps();
         });
     }

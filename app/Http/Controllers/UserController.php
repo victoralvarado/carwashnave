@@ -28,7 +28,8 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'empleado', // Valor por defecto
+            'role' => 'empleado',
+            // Valor por defecto
             'estado' => 'i', // Valor por defecto
         ]);
 
@@ -39,9 +40,9 @@ class UserController extends Controller
 
     public function index()
     {
-        //
-        $usuarios = User::paginate(5);
-        $servicios = Servicio::all();
+        //obtener los users con estado diferente a e
+        $usuarios = User::where('estado', '!=', 'e')->paginate(5);
+        $servicios = Servicio::where('estado', '!=', 'e')->get();
         return view('usuarios.index', compact('usuarios', 'servicios'));
     }
 
@@ -51,7 +52,7 @@ class UserController extends Controller
         $usuario = User::find($request->get('id'));
         if ($request->get('estado') == 'a') {
             $usuario->estado = 'i';
-        }else{
+        } else {
             $usuario->estado = 'a';
         }
         $usuario->save();
@@ -65,6 +66,22 @@ class UserController extends Controller
         $usuario = User::find($id);
         $usuario->role = $request->get('role');
         $usuario->save();
+        return redirect()->route('usuarios');
+    }
+
+
+    //eliminado logico de users
+    public function destroy(string $id)
+    {
+        if ($id === 1) {
+            return redirect()->route('usuarios');
+        } else {
+            $usuario = User::find($id);
+            $usuario->estado = 'e';
+
+            $usuario->save();
+        }
+
         return redirect()->route('usuarios');
     }
 

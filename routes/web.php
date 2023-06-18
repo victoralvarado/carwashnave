@@ -35,6 +35,9 @@ Route::middleware([
         Route::put('usuarios/{id}', 'App\Http\Controllers\UserController@update')
             ->name('usuarios.update');
 
+        Route::delete('usuarios/{id}', 'App\Http\Controllers\UserController@destroy')
+            ->name('usuarios.destroy');
+
 
         Route::post('servicios', 'App\Http\Controllers\ServiciosController@store')
             ->name('servicios');
@@ -44,6 +47,9 @@ Route::middleware([
 
         Route::put('servicios/{id}', 'App\Http\Controllers\ServiciosController@update')
             ->name('servicios.update');
+
+        Route::delete('servicios/{id}', 'App\Http\Controllers\ServiciosController@destroy')
+            ->name('servicios.destroy');
 
 
         Route::get('historial', 'App\Http\Controllers\HistorialClientesController@index')

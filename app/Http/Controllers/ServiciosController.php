@@ -83,8 +83,12 @@ class ServiciosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Servicio $servicio)
+    public function destroy(string $id)
     {
-        //
+        //eliminado logico para servicios
+        $servicio = Servicio::find($id);
+        $servicio->estado = 'e';
+        $servicio->save();
+        return redirect()->route('usuarios');
     }
 }

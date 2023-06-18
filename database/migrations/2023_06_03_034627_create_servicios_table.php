@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion_servicio');
-            $table->enum('estado', ['a', 'i'])->default('a');
+            $table->enum('estado', ['a', 'i', 'e'])->default('a');
             $table->decimal('precio', 10, 2)->nullable();
             $table->timestamps();
         });

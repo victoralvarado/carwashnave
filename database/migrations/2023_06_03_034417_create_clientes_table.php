@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('direccion');
             $table->string('telefono');
             $table->string('tipo_vehiculo');
-            $table->enum('estado', ['a', 'i'])->default('a');
+            $table->enum('estado', ['a', 'i', 'e'])->default('a');
             $table->timestamps();
         });
     }

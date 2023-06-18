@@ -109,7 +109,7 @@ class CobrosController extends Controller
     {
         //
         $clienteserviciodiario = ServicioDiario::find($id);
-        $clienteserviciodiario->estado = 'i';
+        $clienteserviciodiario->estado = 'e';
 
         $clienteserviciodiario->save();
 

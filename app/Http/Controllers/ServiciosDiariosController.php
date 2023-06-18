@@ -172,7 +172,7 @@ class ServiciosDiariosController extends Controller
     {
         //
         $clienteserviciodiario = ServicioDiario::find($id);
-        $clienteserviciodiario->estado = 'ac';
+        $clienteserviciodiario->estado = 'e';
 
         $clienteserviciodiario->save();
 
